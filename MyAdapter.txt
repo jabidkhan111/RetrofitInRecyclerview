@@ -1,0 +1,39 @@
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
+    List<MyModel> modelList;
+
+    public MyAdapter(List<MyModel> modelList) {
+        this.modelList = modelList;
+    }
+
+    @NonNull
+    @Override
+    public MyAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.row,parent,false));
+    }
+    @Override
+    public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
+        holder.binding.id.setText(String.valueOf(modelList.get(position).getId()));
+        holder.binding.name.setText(modelList.get(position).getName());
+        holder.binding.username.setText(modelList.get(position).getUsername());
+        holder.binding.email.setText(modelList.get(position).getEmail());
+        holder.binding.phone.setText(modelList.get(position).getPhone());
+        holder.binding.website.setText(modelList.get(position).getWebsite());
+        holder.binding.street.setText(modelList.get(position).getAddress().getStreet());
+        holder.binding.city.setText(modelList.get(position).getAddress().getCity());
+        holder.binding.zipcode.setText(modelList.get(position).getAddress().getZipcode());
+        holder.binding.lat.setText(modelList.get(position).getAddress().getGeo().getLat());
+        holder.binding.lng.setText(modelList.get(position).getAddress().getGeo().getLng());
+    }
+    @Override
+    public int getItemCount() {
+        return modelList.size();
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        RowBinding binding;
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            binding=RowBinding.bind(itemView);
+        }
+    }
+}

@@ -1,0 +1,4 @@
+public interface ApiInterface {
+    @GET("/users")
+    Call<List<MyModel>> getUsers();
+}

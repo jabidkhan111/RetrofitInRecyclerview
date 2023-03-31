@@ -1,0 +1,25 @@
+public class MainActivity extends AppCompatActivity {
+    ActivityMainBinding binding;
+    List<MyModel> modelList;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding=ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        
+        binding.recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        
+        RetrofitInstance.getInstance().apiInterface.getUsers().enqueue(new Callback<List<MyModel>>() {
+            @Override
+            public void onResponse(Call<List<MyModel>> call, Response<List<MyModel>> response) {
+                modelList=response.body();
+                binding.recyclerview.setAdapter(new MyAdapter(modelList));
+            }
+            @Override
+            public void onFailure(Call<List<MyModel>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Something Went Wrong....", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
+    }
+}
